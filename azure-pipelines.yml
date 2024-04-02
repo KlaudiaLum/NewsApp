@@ -49,11 +49,3 @@ jobs:
         inputs:
           command: custom
           customCommand: run test:ci
-
-      - task: PublishTestResults@2
-        displayName: Publish unit test results
-        condition: succeededOrFailed()
-        inputs:
-          testRunTitle: "[CI] $(Build.DefinitionName) (Unit)"
-          testRunner: JUnit
-          testResultsFiles: test-results.xml
