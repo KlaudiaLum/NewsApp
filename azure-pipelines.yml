@@ -12,9 +12,26 @@ jobs:
     pool:
      vmImage: ubuntu-22.04
     steps: 
-    - task: Npm@1
-      displayName: Lint
-      inputs:
+      - task: NodeTool@0
+        inputs:
+          versionSpec: "20.x"
+        displayName: "Install Node.js"
+
+      - script: npm install -g @angular/cli
+        displayName: "Install Angular CLI"
+
+      - task: Npm@1
+        displayName: NPM Install
+        inputs:
+          command: install
+          customFeed: $(NpmFeed)
+
+      - script: npm run lint
+        displayName: "Check Linting"
+        
+      - task: Npm@1
+        displayName: Lint
+        inputs:
           command: custom
           customCommand: run lint
           verbose: true
