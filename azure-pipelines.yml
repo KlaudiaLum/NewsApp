@@ -1,0 +1,21 @@
+name: NewsAppLayout
+
+variables:
+  name: NpmFeed
+  value: 0995c973-a0a3-41c9-acbf-fca1ecf95883/d11ab0f1-e9d8-4188-b43a-7fdc976862de
+
+trigger:
+  - master
+
+jobs:
+  - job: Default
+    pool:
+     vmImage: ubuntu-22.04
+    steps: 
+    - task: Npm@1
+      displayName: Lint
+      inputs:
+          command: custom
+          customCommand: run lint
+          verbose: true
+    condition: or(eq(variables['Build.SourceBranch'], 'refs/heads/master'), eq(variables['Build.Reason'], 'PullRequest'))
