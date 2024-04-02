@@ -6,7 +6,9 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test",
+    "test": "ng test --code-coverage --browsers Chrome",
+    "test:ci": "ng test --code-coverage --no-watch --browsers ChromeHeadlessNoSandbox",
+    
     "format": "prettier --check .",
     "format:fix": "prettier -w .",
     "lint": "ng lint",

@@ -17,6 +17,10 @@ jobs:
           versionSpec: "20.x"
         displayName: "Install Node.js"
 
+      - task: npmAuthenticate@0
+        inputs:
+          workingFile: .npmrc
+
       - script: npm install -g @angular/cli
         displayName: "Install Angular CLI"
 
@@ -28,11 +32,28 @@ jobs:
 
       - script: npm run lint
         displayName: "Check Linting"
-        
+
+      - script: npm run build
+        displayName: "Build"
+
       - task: Npm@1
         displayName: Lint
         inputs:
           command: custom
           customCommand: run lint
           verbose: true
-    condition: or(eq(variables['Build.SourceBranch'], 'refs/heads/master'), eq(variables['Build.Reason'], 'PullRequest'))
+        condition: or(eq(variables['Build.SourceBranch'], 'refs/heads/master'), eq(variables['Build.Reason'], 'PullRequest'))
+    
+      - task: Npm@1
+        displayName: Unit Tests
+        inputs:
+          command: custom
+          customCommand: run test:ci
+
+      - task: PublishTestResults@2
+        displayName: Publish unit test results
+        condition: succeededOrFailed()
+        inputs:
+          testRunTitle: "[CI] $(Build.DefinitionName) (Unit)"
+          testRunner: JUnit
+          testResultsFiles: test-results.xml
