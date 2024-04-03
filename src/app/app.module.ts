@@ -8,8 +8,7 @@ import { QRCodeModule } from 'angularx-qrcode';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    QrCodeComponent
+    
   ],
   imports: [
     BrowserModule,
@@ -17,6 +16,6 @@ import { QRCodeModule } from 'angularx-qrcode';
     QRCodeModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: []
 })
 export class AppModule { }

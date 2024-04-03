@@ -1,10 +1,13 @@
 import { Component } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
+import { QrCodeComponent } from './qr-code/qr-code.component';
 
 @Component({
   selector: 'app-root',
-  template: `
-  <app-qr-code></app-qr-code>`,
-  styleUrls: ['./app.component.scss']
+  standalone:true,
+  imports:[RouterOutlet, QrCodeComponent],
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
   title = 'NewsApp';
