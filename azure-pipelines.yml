@@ -1,0 +1,51 @@
+name: NewsAppLayout
+
+variables:
+  name: NpmFeed
+  value: 0995c973-a0a3-41c9-acbf-fca1ecf95883/d11ab0f1-e9d8-4188-b43a-7fdc976862de
+
+trigger:
+  - master
+
+jobs:
+  - job: Default
+    pool:
+     vmImage: ubuntu-22.04
+    steps: 
+      - task: NodeTool@0
+        inputs:
+          versionSpec: "20.x"
+        displayName: "Install Node.js"
+
+      - task: npmAuthenticate@0
+        inputs:
+          workingFile: .npmrc
+
+      - script: npm install -g @angular/cli
+        displayName: "Install Angular CLI"
+
+      - task: Npm@1
+        displayName: NPM Install
+        inputs:
+          command: install
+          customFeed: $(NpmFeed)
+
+      - script: npm run lint
+        displayName: "Check Linting"
+
+      - script: npm run build
+        displayName: "Build"
+
+      - task: Npm@1
+        displayName: Lint
+        inputs:
+          command: custom
+          customCommand: run lint
+          verbose: true
+        condition: or(eq(variables['Build.SourceBranch'], 'refs/heads/master'), eq(variables['Build.Reason'], 'PullRequest'))
+    
+      - task: Npm@1
+        displayName: Unit Tests
+        inputs:
+          command: custom
+          customCommand: run test:ci
