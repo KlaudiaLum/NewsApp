@@ -13,13 +13,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ButtonModule } from 'primeng/button';
 
 
+import { HttpClientModule } from '@angular/common/http';
+import { TitileComponent } from './titile/titile.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SubtitleComponent,
     QrCodeComponent,
-
+    TitileComponent,
   ],
   imports: [
     BrowserModule,
@@ -28,6 +30,7 @@ import { ButtonModule } from 'primeng/button';
     QRCodeModule,
     BrowserAnimationsModule,
     ButtonModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
