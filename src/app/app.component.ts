@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { environment } from '../environment/environment';
 
 @Component({
   selector: 'app-root',
@@ -8,4 +9,23 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'NewsApp';
+  mqttConfig = environment.mqtt;
+
+   // connectet libpis with mqtt broker
+   initConnection() {
+    window.luminator.pis.init(this.mqttConfig);
+
+    window.luminator.pis.client.updates().subscribe({
+      next: (state: any) => {
+        if (state) {
+          console.log('LibPis ', state);
+        } else {
+          console.log('Waiting for data...');
+        }
+      },
+      error: (error: any) => {
+        console.error('Error occurred while fetching data:', error);
+      },
+    });
+  }
 }
