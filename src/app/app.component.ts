@@ -11,10 +11,15 @@ export class AppComponent {
   title = 'NewsApp';
   mqttConfig = environment.mqtt;
 
+ngOnInit(): void {
+  this.initConnection();
+}
+
+
    // connectet libpis with mqtt broker
    initConnection() {
     window.luminator.pis.init(this.mqttConfig);
-
+    console.log("MQTT broker config ", this.mqttConfig);
     window.luminator.pis.client.updates().subscribe({
       next: (state: any) => {
         if (state) {
