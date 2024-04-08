@@ -9,8 +9,10 @@ describe('NewsService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports:[HttpClientModule]
-    });
+
+       imports: [HttpClientModule]});
     service = TestBed.inject(NewsService);
+
   });
 
   it('should be created', () => {
