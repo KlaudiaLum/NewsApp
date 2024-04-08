@@ -1,4 +1,4 @@
-import { InitParams} from '../app/app.model';
+import { InitParams } from "@msetsuite/libpis";
 
 export {};
 
