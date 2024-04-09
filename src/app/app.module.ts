@@ -17,14 +17,14 @@ import { ButtonModule } from 'primeng/button';
 @NgModule({
   declarations: [
     AppComponent,
-    SubtitleComponent
+    SubtitleComponent,
     QrCodeComponent,
 
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
     QRCodeModule,
     BrowserAnimationsModule,
     ButtonModule,
