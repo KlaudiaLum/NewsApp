@@ -2,19 +2,34 @@ import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { QrCodeComponent } from './qr-code/qr-code.component';
 import { environment } from '../environment/environment';
+import { NewsService } from 'src/service/news.service';
 
 @Component({
   selector: 'app-root',
-  template: ` <p>NewsApp</p>`,
-  styleUrls: ['./app.component.scss'],
+  template: `
+  <p> NewsApp </p>
+  <app-subtitle
+  *ngFor="let news of newsData"
+      [newsDescription]="news.description"
+  ></app-subtitle>`,
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
   title = 'NewsApp';
+  newsData: any[] = [];
+  constructor( private newsService: NewsService){}
   mqttConfig = environment.mqtt;
   state: any;
 
   ngOnInit(): void {
     this.initConnection();
+   this.fetchNews();
+  }
+  fetchNews():void{
+    this.newsService.getNews().subscribe((data) =>{
+      this.newsData = data
+      console.log('Data from api:', data);
+    })
   }
 
   // connectet libpis with mqtt broker
@@ -38,5 +53,4 @@ export class AppComponent {
       console.error('luminator or pis is not defined');
     }
   }
-  
 }
