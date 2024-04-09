@@ -1,15 +1,12 @@
-import { InitParams } from '@msetsuite/libpis';
-import { Observable } from 'rxjs';
+import { InitParams, NormalizedState, PIS, } from '@msetsuite/libpis';
 
 export {};
 
 declare global {
   interface Window {
     luminator: {
-      pis: {
-        client: {
-          updates(): Observable<unknown>;
-        };
+      pis:  {
+        client: PIS;
         init(params: InitParams): void;
       };
     };

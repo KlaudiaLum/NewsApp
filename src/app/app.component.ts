@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { environment } from 'src/environments/environment';
+import { environment } from '../environment/environment';
 import { NewsService } from 'src/service/news.service';
 
 @Component({
@@ -47,7 +47,7 @@ export class AppComponent implements OnInit {
     window.luminator.pis.init(this.mqttConfig);
 
     window.luminator.pis.client.updates().subscribe({
-      next: (state) => {
+      next: (state: any) => {
         if (state) {
           console.log('LibPis ', state);
         } else {
