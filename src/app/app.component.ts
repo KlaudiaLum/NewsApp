@@ -1,18 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-import { environment } from '../environment/environment';
+import { environment } from 'src/environments/environment';
 import { NewsService } from 'src/service/news.service';
 
 @Component({
   selector: 'app-root',
   template: ` <p>NewsApp</p>
-    <app-titile
-      *ngFor="let news of newsData"
-      [newsTitle]="news.title"
-    ></app-titile>
+    <app-type *ngFor="let news of newsData" [newsType]="news.type"> </app-type>
+
+    <app-titile *ngFor="let news of newsData" [newsTitle]="news.title">
+    </app-titile>
+
     <app-subtitle
       *ngFor="let news of newsData"
       [newsDescription]="news.description"
-    ></app-subtitle>`,
+    >
+    </app-subtitle>`,
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
@@ -26,6 +28,7 @@ export class AppComponent implements OnInit {
     this.initConnection();
     this.fetchNews();
   }
+
   fetchNews(): void {
     this.newsService.getNews().subscribe((data) => {
       this.newsData = data;
@@ -33,25 +36,27 @@ export class AppComponent implements OnInit {
     });
   }
 
-  // connectet libpis with mqtt broker
+  /**
+   * Connec LibPIS with MQTT broker
+   */
   initConnection() {
-    if (window.luminator && window.luminator.pis) {
-      window.luminator.pis.init(this.mqttConfig);
-
-      window.luminator.pis.client.updates().subscribe({
-        next: (state) => {
-          if (state) {
-            console.log('LibPis ', state);
-          } else {
-            console.log('Waiting for data...');
-          }
-        },
-        error: (error: any) => {
-          console.error('Error occurred while fetching data:', error);
-        },
-      });
-    } else {
+    if (!window.luminator.pis) {
       console.error('luminator or pis is not defined');
     }
+
+    window.luminator.pis.init(this.mqttConfig);
+
+    window.luminator.pis.client.updates().subscribe({
+      next: (state) => {
+        if (state) {
+          console.log('LibPis ', state);
+        } else {
+          console.log('Waiting for data...');
+        }
+      },
+      error: (error: any) => {
+        console.error('Error occurred while fetching data:', error);
+      },
+    });
   }
 }

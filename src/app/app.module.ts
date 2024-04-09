@@ -5,31 +5,28 @@ import { AppRoutingModule } from './app.routing.module';
 import { AppComponent } from './app.component';
 import { SubtitleComponent } from './subtitle/subtitle.component';
 import { TitileComponent } from './titile/titile.component';
-import { HttpClientModule } from '@angular/common/http';
-
 import { QrCodeComponent } from './qr-code/qr-code.component';
 import { QRCodeModule } from 'angularx-qrcode';
-
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ButtonModule } from 'primeng/button';
-
-
+import { HttpClientModule } from '@angular/common/http';
+import { TypeComponent } from './type/type.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    SubtitleComponent,
     QrCodeComponent,
+    SubtitleComponent,
     TitileComponent,
+    TypeComponent,
   ],
   imports: [
-    BrowserModule,
     AppRoutingModule,
-    HttpClientModule,
-    QRCodeModule,
     BrowserAnimationsModule,
+    BrowserModule,
     ButtonModule,
     HttpClientModule,
+    QRCodeModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

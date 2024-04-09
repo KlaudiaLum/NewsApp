@@ -1,9 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
-import { QRCodeModule } from 'angularx-qrcode';
-import { HttpClientModule } from '@angular/common/http';
-import { QrCodeComponent } from './qr-code/qr-code.component';
 
 describe('AppComponent', () => {
   beforeEach(() => TestBed.configureTestingModule({
