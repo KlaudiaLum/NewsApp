@@ -21,7 +21,7 @@ import { ButtonModule } from 'primeng/button';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    QRCodeModule
+    QRCodeModule,
     BrowserAnimationsModule,
     ButtonModule,
 
