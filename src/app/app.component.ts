@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { QrCodeComponent } from './qr-code/qr-code.component';
 import { environment } from '../environment/environment';
 import { NewsService } from 'src/service/news.service';
 
@@ -8,6 +6,7 @@ import { NewsService } from 'src/service/news.service';
   selector: 'app-root',
   template: `
   <p> NewsApp </p>
+  <app-titile *ngFor="let news of newsData" [newsTitle]="news.title"></app-titile>
   <app-subtitle
   *ngFor="let news of newsData"
       [newsDescription]="news.description"
@@ -36,7 +35,7 @@ export class AppComponent {
   initConnection() {
     if (window.luminator && window.luminator.pis) {
       window.luminator.pis.init(this.mqttConfig);
-  
+
       window.luminator.pis.client.updates().subscribe({
         next: (state: any) => {
           if (state) {
