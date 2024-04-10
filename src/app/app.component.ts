@@ -55,21 +55,21 @@ export class AppComponent implements OnInit {
   /**
    * fetch coordinates
    */
-  fetchCoordinates(state: any):void{
-    if (state.stopList && state.stopList.length > 0){
-      const coordinate = this.coordinatesService.getCoordinates(state.stopList)
-      console.log ("coordinate" , coordinate)
-      if (coordinate) {
-        this.coordinates = coordinate;
-      }else{
-        this.coordinates = []
+  fetchCoordinates(state: any): void {
+    if (state.stopList && state.stopList.length > 0) {
+      const coordinates = this.coordinatesService.getCoordinates(state.stopList);
+      console.log("coordinates:", coordinates);
+      if (coordinates && coordinates.length >= 3) {
+        this.coordinates = coordinates.slice(0, 3);
+        console.log("coordinates only first 3:", this.coordinates);
+      } else {
+        this.coordinates = [];
       }
-    }else{
+    } else {
       console.log('StopList is either undefined or empty');
-      this.coordinates = []; 
+      this.coordinates = [];
     }
-    
-  }
+}
 
 
   /**
