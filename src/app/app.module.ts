@@ -11,6 +11,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ButtonModule } from 'primeng/button';
 import { HttpClientModule } from '@angular/common/http';
 import { TypeComponent } from './type/type.component';
+import { StopListComponent } from './stop-list/stop-list.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { TypeComponent } from './type/type.component';
     SubtitleComponent,
     TitileComponent,
     TypeComponent,
+    StopListComponent,
   ],
   imports: [
     AppRoutingModule,

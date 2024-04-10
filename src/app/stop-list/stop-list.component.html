@@ -1,0 +1,4 @@
+<div *ngFor="let stop of stops">
+    <p>Stop name: {{ stop.name }}</p>
+  </div>
+  <p *ngIf="!stops || stops.length === 0">Not found</p>
