@@ -1,4 +1,6 @@
-<div *ngFor="let stop of stops">
-    <p>Stop name: {{ stop.name }}</p>
-  </div>
-  <p *ngIf="!stops || stops.length === 0">Not found</p>
+<div *ngIf="displayedStop">
+  <p>Stop name: {{ displayedStop.name }}</p>
+</div>
+<app-type *ngFor="let news of newsData" [newsType]="news.type"> </app-type>
+<app-titile *ngFor="let news of newsData" [newsTitle]="news.title"> </app-titile>
+<app-subtitle *ngFor="let news of newsData" [newsDescription]="news.description"> </app-subtitle>

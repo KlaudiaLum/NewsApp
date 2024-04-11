@@ -3,74 +3,67 @@ import { environment } from '../environment/environment';
 import { NewsService } from 'src/service/news.service';
 import { StopListService } from 'src/service/stop-list.service';
 import { CoordinatesService } from 'src/service/coordinates.service';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-root',
-  template: ` <p>NewsApp</p>
-    <app-type *ngFor="let news of newsData" [newsType]="news.type"> </app-type>
-
-    <app-titile *ngFor="let news of newsData" [newsTitle]="news.title">
-    </app-titile>
-
-    <app-subtitle
-      *ngFor="let news of newsData"
-      [newsDescription]="news.description"
-    >
-    </app-subtitle>
-    <app-stop-list [stops]="stops"></app-stop-list>
-    `,
+  template: `
+    <p>NewsApp</p>
+    <app-stop-list [stops]="stops" [newsData]="newsDataArray"></app-stop-list>
+  `,
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
   title = 'NewsApp';
+  newsType!: string;
+  newsTitle!: string;
+  newsDescription!: string;
   newsData: any[] = [];
   mqttConfig = environment.mqtt;
   state: any;
-  stops: string[] = [];
-  latitude = 0;
-  longitude = 0;
-  coordinates: { latitude: number; longitude: number; }[] =[];
-
+  stops: any[] = [];
+  latitude = 56.920602;
+  longitude = 14.595295;
+  coordinates: { latitude: number; longitude: number }[] = [];
+  newsDataArray: any[] = [];
+  blacklistSources = '';
 
   constructor(
     private newsService: NewsService,
     private stopListService: StopListService,
-    private coordinatesService: CoordinatesService
-   
+    private coordinatesService: CoordinatesService,
   ) {}
 
   ngOnInit(): void {
     this.initConnection();
-    this.fetchNews();
-    
+    this.fetWeatherCoordinates(
+      this.latitude,
+      this.longitude,
+      this.blacklistSources,
+    );
   }
 
-  fetchNews(): void {
-    this.newsService.getNews().subscribe((data) => {
-      this.newsData = data;
-    
-      console.log('Data from api:', data);
-    });
-  }
   /**
    * fetch coordinates
    */
-  fetchCoordinates(state: any): void {
-    if (state.stopList && state.stopList.length > 0) {
-      const coordinates = this.coordinatesService.getCoordinates(state.stopList);
-      console.log("coordinates:", coordinates);
-      if (coordinates && coordinates.length >= 3) {
-        this.coordinates = coordinates.slice(0, 3);
-        console.log("coordinates only first 3:", this.coordinates);
-      } else {
-        this.coordinates = [];
-      }
-    } else {
-      console.log('StopList is either undefined or empty');
-      this.coordinates = [];
-    }
-}
-
+  fetWeatherCoordinates(
+    latitude: number,
+    longitude: number,
+    blacklistSources: any,
+  ): void {
+    this.newsService
+      .getNewsCoordinats(latitude, longitude, blacklistSources)
+      .pipe(filter((data) => data !== undefined))
+      .subscribe({
+        next: (data) => {
+          this.newsDataArray.push(data);
+          console.log('API news:', data);
+        },
+        error(err) {
+          console.error('Something wrong occurred: ' + err);
+        },
+      });
+  }
 
   /**
    * Connec LibPIS with MQTT broker
@@ -86,8 +79,8 @@ export class AppComponent implements OnInit {
       next: (state: any) => {
         if (state) {
           console.log('LibPis ', state);
-          this.fetchStopList(state);
-          this.fetchCoordinates(state);
+          this.receiveStopList(state);
+          this.receiveCoordinates(state);
         } else {
           console.log('Waiting for data...');
         }
@@ -98,24 +91,40 @@ export class AppComponent implements OnInit {
     });
   }
 
-    /**
+  /**
+   * get lat and lon
+   */
+
+  receiveCoordinates(state: any): void {
+    if (state.stopList && state.stopList.length > 0) {
+      const coordinates = this.coordinatesService.getCoordinates(
+        state.stopList,
+      );
+      console.log('coordinates:', coordinates);
+      if (coordinates) {
+        this.coordinates = coordinates;
+      } else {
+        this.coordinates = [];
+      }
+    } else {
+      console.log('StopList is either undefined or empty');
+      this.coordinates = [];
+    }
+  }
+
+  /**
    * get stop list
    */
-    fetchStopList (state:any):void{
-      const stopNames = this.stopNames(state.stopList)
-      this.stops = stopNames;
-      console.log("Stop names: " , stopNames)
-      this.stopListService.setStops(stopNames);
-      const retrievedStops = this.stopListService.getStops();
-      console.log('Retrieved stops:', retrievedStops);
-    }
-    
+  receiveStopList(state: any): void {
+    const stopNames = this.stopNames(state.stopList);
+    this.stops = stopNames;
+    console.log('Stop names: ', stopNames);
+    this.stopListService.setStops(stopNames);
+    const retrievedStops = this.stopListService.getStops();
+    console.log('Retrieved stops:', retrievedStops);
+  }
 
-    stopNames(stopList:any):any []{
-      return stopList
-    }
-  
-
-
-
+  stopNames(stopList: any): any[] {
+    return stopList;
+  }
 }

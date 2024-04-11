@@ -4,13 +4,13 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class StopListService {
-  private stops: string[] = [];
+  private stops: any[] = [];
 
-  setStops(stops: string[]) : void {
+  setStops(stops: any[]) : void {
     this.stops = stops
   }
 
-  getStops():string[]{
+  getStops():any[]{
     return this.stops
   }
 }
