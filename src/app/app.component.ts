@@ -7,4 +7,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
 
+  stopNames(stopList: any): any[] {
+    return stopList;
+  }
 }
