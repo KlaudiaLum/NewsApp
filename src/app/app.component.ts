@@ -18,6 +18,7 @@ export class AppComponent implements OnInit {
   newsType!: string;
   newsTitle!: string;
   newsDescription!: string;
+  newsImage!: string;
   newsData: any[] = [];
   mqttConfig = environment.mqtt;
   state: any;
@@ -27,6 +28,7 @@ export class AppComponent implements OnInit {
   coordinates: { latitude: number; longitude: number }[] = [];
   newsDataArray: any[] = [];
   blacklistSources = '';
+  private previousStopList: any;
 
   constructor(
     private newsService: NewsService,
@@ -56,7 +58,12 @@ export class AppComponent implements OnInit {
       .pipe(filter((data) => data !== undefined))
       .subscribe({
         next: (data) => {
-          this.newsDataArray.push(data);
+          const weatherDataWithLatLong = {
+            latitude: latitude,
+            longitude: longitude,
+            data: data,
+          };
+          this.newsDataArray.push(weatherDataWithLatLong);
           console.log('API news:', data);
         },
         error(err) {
@@ -97,12 +104,22 @@ export class AppComponent implements OnInit {
 
   receiveCoordinates(state: any): void {
     if (state.stopList && state.stopList.length > 0) {
+      const areStopsSame = this.areStopsSame(state.stopList);
+      if (areStopsSame) {
+        console.log('data is same ');
+        return;
+      }
+      // If the data is different, update the previous stop list
+      this.previousStopList = state.stopList;
       const coordinates = this.coordinatesService.getCoordinates(
         state.stopList,
       );
       console.log('coordinates:', coordinates);
       if (coordinates) {
         this.coordinates = coordinates;
+        this.coordinates.forEach((element) => {
+          this.fetWeatherCoordinates(element.latitude, element.longitude, '');
+        });
       } else {
         this.coordinates = [];
       }
@@ -110,6 +127,29 @@ export class AppComponent implements OnInit {
       console.log('StopList is either undefined or empty');
       this.coordinates = [];
     }
+  }
+
+  /**
+   * Check if the stop names are the same
+   */
+  areStopsSame(stopList: any[]): boolean {
+    if (
+      !stopList ||
+      !this.previousStopList ||
+      stopList.length !== this.previousStopList.length
+    ) {
+      return false;
+    }
+    for (let i = 0; i < stopList.length; i++) {
+      if (
+        !stopList[i].name ||
+        !this.previousStopList[i].name ||
+        stopList[i].name !== this.previousStopList[i].name
+      ) {
+        return false;
+      }
+    }
+    return true;
   }
 
   /**

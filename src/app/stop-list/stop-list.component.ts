@@ -60,4 +60,63 @@ export class StopListComponent {
 
     return differenceInMinutes;
   }
+
+  // Print the news
+  getTitleForStop(stop: any): { title: string }[] {
+    const newsForStop = this.newsData.find(
+      (news) =>
+        news &&
+        news.latitude === stop.latitude &&
+        news.longitude === stop.longitude,
+    );
+    if (newsForStop) {
+      return newsForStop.data.map((item: any) => ({ title: item.title }));
+    } else {
+      return [];
+    }
+  }
+
+  getSubtitleForStop(stop: any): { description: string }[] {
+    const newsForStop = this.newsData.find(
+      (news) =>
+        news &&
+        news.latitude === stop.latitude &&
+        news.longitude === stop.longitude,
+    );
+    if (newsForStop) {
+      return newsForStop.data.map((item: any) => ({
+        description: item.description,
+      }));
+    } else {
+      return [];
+    }
+  }
+
+  getTypeForStop(stop: any): { type: string }[] {
+    const newsForStop = this.newsData.find(
+      (news) =>
+        news &&
+        news.latitude === stop.latitude &&
+        news.longitude === stop.longitude,
+    );
+    if (newsForStop) {
+      return newsForStop.data.map((item: any) => ({ type: item.type }));
+    } else {
+      return [];
+    }
+  }
+
+  getImageForStop(stop: any): { imageUrl: string }[] {
+    const newsForStop = this.newsData.find(
+      (news) =>
+        news &&
+        news.latitude === stop.latitude &&
+        news.longitude === stop.longitude,
+    );
+    if (newsForStop) {
+      return newsForStop.data.map((item: any) => ({ imageUrl: item.imageUrl }));
+    } else {
+      return [];
+    }
+  }
 }

@@ -12,6 +12,7 @@ import { ButtonModule } from 'primeng/button';
 import { HttpClientModule } from '@angular/common/http';
 import { TypeComponent } from './type/type.component';
 import { StopListComponent } from './stop-list/stop-list.component';
+import { ImageComponent } from './image/image.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { StopListComponent } from './stop-list/stop-list.component';
     TitileComponent,
     TypeComponent,
     StopListComponent,
+    ImageComponent
   ],
   imports: [
     AppRoutingModule,
