@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { NewsData, StopData } from '../app.model';
 
 @Component({
   selector: 'app-stop-list',
@@ -6,10 +7,11 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./stop-list.component.scss'],
 })
 export class StopListComponent {
-  @Input() stops: any[] = [];
-  @Input() newsData: any[] = [];
-  displayedStop: any;
+  @Input() stops: StopData[] = [];
+  @Input() newsData: NewsData[] = [];
+  displayedStop: StopData | null = null;
 
+  
   ngOnChanges() {
     this.updateDisplayedStop();
   }
@@ -19,6 +21,7 @@ export class StopListComponent {
       // Find the first matching stop
       const currentStop = this.stops.find((stop) => this.isCurrentStop(stop));
       this.displayedStop = currentStop || null;
+      console.log('this.displayedStop' , this.displayedStop)
     } else {
       this.displayedStop = null;
     }
@@ -63,13 +66,15 @@ export class StopListComponent {
 
   // Print the news
   getTitleForStop(stop: any): { title: string }[] {
+    console.log('Stops', stop)
+    console.log('this.newsData', this.newsData)
     const newsForStop = this.newsData.find(
       (news) =>
         news &&
         news.latitude === stop.latitude &&
         news.longitude === stop.longitude,
     );
-    if (newsForStop) {
+    if (newsForStop && Array.isArray(newsForStop.data)) {
       return newsForStop.data.map((item: any) => ({ title: item.title }));
     } else {
       return [];
@@ -83,7 +88,7 @@ export class StopListComponent {
         news.latitude === stop.latitude &&
         news.longitude === stop.longitude,
     );
-    if (newsForStop) {
+    if (newsForStop && Array.isArray(newsForStop.data)) {
       return newsForStop.data.map((item: any) => ({
         description: item.description,
       }));
@@ -99,7 +104,7 @@ export class StopListComponent {
         news.latitude === stop.latitude &&
         news.longitude === stop.longitude,
     );
-    if (newsForStop) {
+    if (newsForStop && Array.isArray(newsForStop.data)) {
       return newsForStop.data.map((item: any) => ({ type: item.type }));
     } else {
       return [];
@@ -113,7 +118,7 @@ export class StopListComponent {
         news.latitude === stop.latitude &&
         news.longitude === stop.longitude,
     );
-    if (newsForStop) {
+    if (newsForStop && Array.isArray(newsForStop.data) ) {
       return newsForStop.data.map((item: any) => ({ imageUrl: item.imageUrl }));
     } else {
       return [];

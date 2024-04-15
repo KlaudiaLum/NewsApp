@@ -4,6 +4,7 @@ import { NewsService } from 'src/service/news.service';
 import { StopListService } from 'src/service/stop-list.service';
 import { CoordinatesService } from 'src/service/coordinates.service';
 import { filter } from 'rxjs';
+import { Coordinates, NewsData, StopData } from './app.model';
 
 @Component({
   selector: 'app-root',
@@ -19,17 +20,17 @@ export class AppComponent implements OnInit {
   newsTitle!: string;
   newsDescription!: string;
   newsImage!: string;
-  newsData: any[] = [];
+  newsData: NewsData[] | Coordinates = [];
   mqttConfig = environment.mqtt;
   state: any;
-  stops: any[] = [];
-  latitude = 56.920602;
-  longitude = 14.595295;
-  coordinates: { latitude: number; longitude: number }[] = [];
-  newsDataArray: any[] = [];
+  stops: StopData[] = [];
+  latitude = 0;
+  longitude = 0;
+  coordinates: Coordinates[] = [];
+  newsDataArray: NewsData[] = [];
   blacklistSources = '';
-  private previousStopList: any;
-
+  private previousStopList: StopData[] = [];
+  
   constructor(
     private newsService: NewsService,
     private stopListService: StopListService,
@@ -38,7 +39,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.initConnection();
-    this.fetWeatherCoordinates(
+    this.fetNewsCoordinates(
       this.latitude,
       this.longitude,
       this.blacklistSources,
@@ -48,7 +49,7 @@ export class AppComponent implements OnInit {
   /**
    * fetch coordinates
    */
-  fetWeatherCoordinates(
+  fetNewsCoordinates(
     latitude: number,
     longitude: number,
     blacklistSources: any,
@@ -58,13 +59,13 @@ export class AppComponent implements OnInit {
       .pipe(filter((data) => data !== undefined))
       .subscribe({
         next: (data) => {
-          const weatherDataWithLatLong = {
+          const newsDataWithLatLong = {
             latitude: latitude,
             longitude: longitude,
-            data: data,
+            data: data.length > 0 ? data[0] : null
           };
-          this.newsDataArray.push(weatherDataWithLatLong);
-          console.log('API news:', data);
+          this.newsDataArray.push(newsDataWithLatLong);
+          console.log('API news:', newsDataWithLatLong);
         },
         error(err) {
           console.error('Something wrong occurred: ' + err);
@@ -118,7 +119,7 @@ export class AppComponent implements OnInit {
       if (coordinates) {
         this.coordinates = coordinates;
         this.coordinates.forEach((element) => {
-          this.fetWeatherCoordinates(element.latitude, element.longitude, '');
+          this.fetNewsCoordinates(element.latitude, element.longitude, '');
         });
       } else {
         this.coordinates = [];
@@ -158,7 +159,7 @@ export class AppComponent implements OnInit {
   receiveStopList(state: any): void {
     const stopNames = this.stopNames(state.stopList);
     this.stops = stopNames;
-    console.log('Stop names: ', stopNames);
+    console.log('Stop names: ', this.stops);
     this.stopListService.setStops(stopNames);
     const retrievedStops = this.stopListService.getStops();
     console.log('Retrieved stops:', retrievedStops);
