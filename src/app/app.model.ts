@@ -66,7 +66,7 @@ export interface NewsData {
       type: string;
       source: string;
       imageUrl?: string;
-  }[];
+  };
 }
 
 

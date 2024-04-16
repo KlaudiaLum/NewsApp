@@ -1,8 +1,9 @@
-<div *ngIf="displayedStop">
-  <p>Stop name: {{ displayedStop.name }}</p>
-</div>
-
-<app-type *ngFor="let news of getTypeForStop(displayedStop)" [newsType]="news.type"></app-type>
-<app-titile *ngFor="let news of getTitleForStop(displayedStop)" [newsTitle]="news.title"></app-titile>
-<app-subtitle *ngFor="let news of getSubtitleForStop(displayedStop)" [newsDescription]="news.description"></app-subtitle>
-<app-image  *ngFor="let news of getImageForStop(displayedStop)" [newsImage]="news.imageUrl"></app-image>
+<ng-template *ngFor="let news of newsData">
+  <app-type [newsType]="news.data.type"></app-type>
+  <app-title [newsTitle]="news.data.title"></app-title>
+  <app-subtitle [newsDescription]="news.data.description"></app-subtitle>
+  <app-image
+    *ngIf="news.data.imageUrl"
+    [newsImage]="news.data.imageUrl"
+  ></app-image>
+</ng-template>

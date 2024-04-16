@@ -17,8 +17,7 @@ export class NewsService {
     return this.http.get<NewsData[]>(url);
   }
 
-  getNewsCoordinats(latitude: number, longitude: number, blacklistSources:any): Observable<any> {
-    const url = `${this.apiUrl}?lon=${longitude}&lat=${latitude}&blacklistSources=${blacklistSources}`;
-    return this.http.get(url);
+  getNewsByCoordinates(latitude: number, longitude: number, blacklistSources: string): Observable<NewsData[]> {
+    return this.http.get<NewsData[]>(`${this.apiUrl}?lon=${longitude}&lat=${latitude}&blacklistSources=${blacklistSources}`);
   }
 }

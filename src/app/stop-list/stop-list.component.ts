@@ -1,127 +1,53 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { NewsData, StopData } from '../app.model';
+import { NewsService } from 'src/service/news.service';
+import { StopListService } from 'src/service/stop-list.service';
+import { CoordinatesService } from 'src/service/coordinates.service';
+import { LibpisService } from 'src/service/libpis.service';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-stop-list',
   templateUrl: './stop-list.component.html',
   styleUrls: ['./stop-list.component.scss'],
 })
-export class StopListComponent {
-  @Input() stops: StopData[] = [];
-  @Input() newsData: NewsData[] = [];
-  displayedStop: StopData | null = null;
+export class StopListComponent implements OnInit {
+  stops: StopData[] = [];
+  newsData: NewsData[] = [];
+  region: string | undefined;
 
-  
-  ngOnChanges() {
-    this.updateDisplayedStop();
+  // TODO: Implement Blacklist
+  blackList: string = '';
+
+  constructor(
+    private newsService: NewsService,
+    private libPISService: LibpisService,
+  ) {}
+
+  ngOnInit(): void {
+    this.libPISService.getState().pipe(debounceTime(1000)).subscribe((state) => {
+      //const [latitude, longitude] = [state.gpsLatitude, state.gpsLongitude];
+
+      let latitude: number;
+      let longitude: number;
+
+      const nextStopName = state.nextStop1Name;
+      const nextStop = state.stopList?.find((stop) => stop.name === nextStopName)
+
+      if (nextStop) {
+        latitude = nextStop.latitude;
+        longitude = nextStop.longitude;
+      
+        this.handleNewsData(latitude, longitude, this.blackList);
+      } else {
+        console.warn("Missing Coordinates in state.");
+      }
+    })
   }
 
-  updateDisplayedStop() {
-    if (this.stops && this.stops.length > 0) {
-      // Find the first matching stop
-      const currentStop = this.stops.find((stop) => this.isCurrentStop(stop));
-      this.displayedStop = currentStop || null;
-      console.log('this.displayedStop' , this.displayedStop)
-    } else {
-      this.displayedStop = null;
-    }
-  }
-
-  isCurrentStop(stop: any): boolean {
-    const differenceInMinutes = this.getMinutesRemaining(
-      stop.expectedArrivalTime,
-    );
-    return differenceInMinutes > 0 && differenceInMinutes < 60; // Show the stop if it arrives within the next 60 minutes
-  }
-
-  calculateArrivalTime(expectedArrivalTime: string): string {
-    if (!expectedArrivalTime) {
-      return '--';
-    }
-
-    const differenceInMinutes = this.getMinutesRemaining(expectedArrivalTime);
-
-    return differenceInMinutes < 0
-      ? 'Already arrived'
-      : `${differenceInMinutes} min`;
-  }
-
-  getMinutesRemaining(expectedArrivalTime: string): number {
-    if (!expectedArrivalTime) {
-      return 0;
-    }
-
-    const arrivalTime = new Date();
-    const [hours, minutes] = expectedArrivalTime.split(':').map(Number);
-    arrivalTime.setHours(hours);
-    arrivalTime.setMinutes(minutes);
-
-    const currentTime = new Date();
-    const differenceInMinutes = Math.round(
-      (arrivalTime.getTime() - currentTime.getTime()) / (1000 * 60),
-    );
-
-    return differenceInMinutes;
-  }
-
-  // Print the news
-  getTitleForStop(stop: any): { title: string }[] {
-    console.log('Stops', stop)
-    console.log('this.newsData', this.newsData)
-    const newsForStop = this.newsData.find(
-      (news) =>
-        news &&
-        news.latitude === stop.latitude &&
-        news.longitude === stop.longitude,
-    );
-    if (newsForStop && Array.isArray(newsForStop.data)) {
-      return newsForStop.data.map((item: any) => ({ title: item.title }));
-    } else {
-      return [];
-    }
-  }
-
-  getSubtitleForStop(stop: any): { description: string }[] {
-    const newsForStop = this.newsData.find(
-      (news) =>
-        news &&
-        news.latitude === stop.latitude &&
-        news.longitude === stop.longitude,
-    );
-    if (newsForStop && Array.isArray(newsForStop.data)) {
-      return newsForStop.data.map((item: any) => ({
-        description: item.description,
-      }));
-    } else {
-      return [];
-    }
-  }
-
-  getTypeForStop(stop: any): { type: string }[] {
-    const newsForStop = this.newsData.find(
-      (news) =>
-        news &&
-        news.latitude === stop.latitude &&
-        news.longitude === stop.longitude,
-    );
-    if (newsForStop && Array.isArray(newsForStop.data)) {
-      return newsForStop.data.map((item: any) => ({ type: item.type }));
-    } else {
-      return [];
-    }
-  }
-
-  getImageForStop(stop: any): { imageUrl: string }[] {
-    const newsForStop = this.newsData.find(
-      (news) =>
-        news &&
-        news.latitude === stop.latitude &&
-        news.longitude === stop.longitude,
-    );
-    if (newsForStop && Array.isArray(newsForStop.data) ) {
-      return newsForStop.data.map((item: any) => ({ imageUrl: item.imageUrl }));
-    } else {
-      return [];
-    }
+  handleNewsData(latitude: number, longitude: number, blackList: string) {
+    this.newsService.getNewsByCoordinates(latitude, longitude, blackList).subscribe((news) => {
+        this.newsData = news;
+    })
   }
 }
