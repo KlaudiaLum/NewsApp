@@ -2,9 +2,9 @@ import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-type',
-  templateUrl: './type.component.html',
+  template: `{{newsType}}`,
   styleUrls: ['./type.component.scss']
 })
 export class TypeComponent {
-@Input() newsType!: string
+  @Input() newsType!: string
 }

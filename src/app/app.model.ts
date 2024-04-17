@@ -57,18 +57,13 @@ export interface Coordinates {
 }
 
 export interface NewsData {
-  latitude: number;
-  longitude: number;
-  data: {
-      title: string;
-      description: string;
-      url: string;
-      type: string;
-      source: string;
-      imageUrl?: string;
-  };
+  title: string;
+  description: string;
+  url: string;
+  type: "LOCAL" | "NATIONAL" | "INTERNATIONAL";
+  source: string;
+  imageUrl?: string;
 }
-
 
 export interface StopData {
   cancelled: boolean;

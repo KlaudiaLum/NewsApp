@@ -1,9 +1,0 @@
-<ng-template *ngFor="let news of newsData">
-  <app-type [newsType]="news.data.type"></app-type>
-  <app-title [newsTitle]="news.data.title"></app-title>
-  <app-subtitle [newsDescription]="news.data.description"></app-subtitle>
-  <app-image
-    *ngIf="news.data.imageUrl"
-    [newsImage]="news.data.imageUrl"
-  ></app-image>
-</ng-template>
