@@ -34,7 +34,7 @@ export class StopListComponent implements OnInit {
   region: string | undefined;
 
   // TODO: Implement Blacklist
-  blackList: string = '';
+  blackList = '';
 
   constructor(
     private newsService: NewsService,

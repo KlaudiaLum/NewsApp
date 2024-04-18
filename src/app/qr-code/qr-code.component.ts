@@ -6,5 +6,5 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./qr-code.component.scss'],
 })
 export class QrCodeComponent {
-  @Input() link: string = 'https://www.aftonbladet.se/nyheter/a/zEdwX5/minister-timmar-tills-sverige-gar-med-i-nato';
+  @Input() link = 'https://www.aftonbladet.se/nyheter/a/zEdwX5/minister-timmar-tills-sverige-gar-med-i-nato';
 }
