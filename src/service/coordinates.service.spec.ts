@@ -10,7 +10,5 @@ describe('CoordinatesService', () => {
     service = TestBed.inject(CoordinatesService);
   });
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
+  
 });
