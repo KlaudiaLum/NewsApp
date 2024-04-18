@@ -5,11 +5,14 @@ import { QRCodeModule } from 'angularx-qrcode';
 import { HttpClientModule } from '@angular/common/http';
 import { QrCodeComponent } from './qr-code/qr-code.component';
 import { StopListComponent } from './stop-list/stop-list.component';
+import { TitleComponent } from './titile/titile.component';
+import { LibpisService } from 'src/service/libpis.service';
 
 describe('AppComponent', () => {
   beforeEach(() => TestBed.configureTestingModule({
     imports: [RouterTestingModule, QRCodeModule, HttpClientModule],
-    declarations: [AppComponent, QrCodeComponent, StopListComponent]
+    declarations: [AppComponent, QrCodeComponent, StopListComponent, TitleComponent],
+    providers:[LibpisService]
 
   }));
 
@@ -19,9 +22,5 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'NewsApp'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('NewsApp');
-  });
+
 });

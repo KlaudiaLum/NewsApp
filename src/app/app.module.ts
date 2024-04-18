@@ -13,6 +13,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { TypeComponent } from './type/type.component';
 import { StopListComponent } from './stop-list/stop-list.component';
 import { ImageComponent } from './image/image.component';
+import { CardModule } from 'primeng/card';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { ImageComponent } from './image/image.component';
     ButtonModule,
     HttpClientModule,
     QRCodeModule,
+    CardModule
   ],
   providers: [],
   bootstrap: [AppComponent]
