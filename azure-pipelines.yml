@@ -24,11 +24,8 @@ jobs:
       - script: npm install -g @angular/cli
         displayName: "Install Angular CLI"
 
-      - task: Npm@1
-        displayName: NPM Install
-        inputs:
-          command: install
-          customFeed: $(NpmFeed)
+      - script: npm install --allow-legacy-deps
+        displayName: "NPM Install (Legacy Deps)"
 
       - script: npm run lint
         displayName: "Check Linting"
