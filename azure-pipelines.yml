@@ -24,8 +24,8 @@ jobs:
       - script: npm install -g @angular/cli
         displayName: "Install Angular CLI"
 
-      - script: npm install --legacy-peer-deps
-        displayName: "NPM Install (Legacy Deps)"
+      - script: npm install
+        displayName: "NPM Install"
 
       - script: npm run lint
         displayName: "Check Linting"
