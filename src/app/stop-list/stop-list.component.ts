@@ -7,9 +7,14 @@ import { throttleTime } from 'rxjs/operators';
 @Component({
   selector: 'app-stop-list',
   template: `
-    <ng-container *ngFor="let news of newsData">
-      <div class="card-container">
+    <ng-container *ngFor="let news of newsData; let i = index">
+      <div
+        class="card-container"
+        [ngClass]="getContainerClass(news.type.toLowerCase())"
+        *ngIf="i === currentIndex"
+      >
         <div class="news-wrapper">
+          <p>{{ news.type }}</p>
           <div class="image-container">
             <img alt="Card" [src]="news.imageUrl" class="card-image" />
             <div>
@@ -20,7 +25,11 @@ import { throttleTime } from 'rxjs/operators';
         </div>
 
         <div class="qr-wrapper">
-          <qrcode [qrdata]="news.url" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
+          <qrcode
+            [qrdata]="news.url"
+            [width]="256"
+            [errorCorrectionLevel]="'M'"
+          ></qrcode>
         </div>
       </div>
     </ng-container>
@@ -31,8 +40,9 @@ export class StopListComponent implements OnInit {
   stops: StopData[] = [];
   newsData: NewsData[] = [];
   region: string | undefined;
-  
+
   blackList = '';
+  currentIndex = 0;
 
   constructor(
     private newsService: NewsService,
@@ -63,6 +73,10 @@ export class StopListComponent implements OnInit {
           this.handleNewsData(latitude, longitude, this.blackList);
         }
       });
+
+    setInterval(() => {
+      this.currentIndex = (this.currentIndex + 1) % this.newsData.length;
+    }, 20000);
   }
 
   handleNewsData(latitude: number, longitude: number, blackList: string) {
@@ -70,7 +84,20 @@ export class StopListComponent implements OnInit {
       .getNewsByCoordinates(latitude, longitude, blackList)
       .subscribe((news) => {
         this.newsData = news;
-        console.log("News" , this.newsData)
+        console.log('News', this.newsData);
       });
+  }
+
+  getContainerClass(type: string): string {
+    switch (type) {
+      case 'local':
+        return 'local-bg';
+      case 'national':
+        return 'national-bg';
+      case 'international':
+        return 'international-bg';
+      default:
+        return '';
+    }
   }
 }

@@ -6,17 +6,29 @@
   gap: 1rem;
   border-radius: 2rem;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+  &.local-bg {
+    background-color: rgb(244, 224, 213);
+  }
+
+  &.national-bg {
+    background-color: rgb(209, 245, 209);
+  }
+
+  &.international-bg {
+    background-color: rgb(205, 240, 244);
+  }
 }
 
 .news-wrapper {
   position: relative;
   display: grid;
   place-items: center;
-}
 
-.news-wrapper img {
-  width: 100%;
-  height: auto;
+  img {
+    width: 100%;
+    height: auto;
+  }
 }
 
 .qr-wrapper {
