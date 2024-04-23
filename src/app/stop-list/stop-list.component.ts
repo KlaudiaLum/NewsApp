@@ -7,24 +7,23 @@ import { throttleTime } from 'rxjs/operators';
 @Component({
   selector: 'app-stop-list',
   template: `
-   <ng-container *ngFor="let news of newsData">
-  <p-card *ngIf="news.title || news.type || news.description || news.imageUrl">
-    <ng-template pTemplate="title">
-      <app-title *ngIf="news.title" [newsTitle]="news.title"></app-title>
-    </ng-template>
-    <ng-template pTemplate="subtitle">
-      <app-subtitle *ngIf="news.description" [newsDescription]="news.description"></app-subtitle>
-    </ng-template>
-    <ng-template pTemplate="content">
-      <app-image *ngIf="news.imageUrl" [newsImage]="news.imageUrl"></app-image>
-    </ng-template>
-    <ng-template pTemplate="footer">
-      <app-type *ngIf="news.type" [newsType]="news.type"></app-type>
-    </ng-template>
-  </p-card>
-</ng-container>
+    <ng-container *ngFor="let news of newsData">
+      <div class="card-container">
+        <div class="news-wrapper">
+          <div class="image-container">
+            <img alt="Card" [src]="news.imageUrl" class="card-image" />
+            <div>
+              <h3>{{ news.title }}</h3>
+              <p>{{ news.description }}</p>
+            </div>
+          </div>
+        </div>
 
-
+        <div class="qr-wrapper">
+          <qrcode [qrdata]="news.url" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
+        </div>
+      </div>
+    </ng-container>
   `,
   styleUrls: ['./stop-list.component.scss'],
 })
@@ -32,8 +31,7 @@ export class StopListComponent implements OnInit {
   stops: StopData[] = [];
   newsData: NewsData[] = [];
   region: string | undefined;
-
-  // TODO: Implement Blacklist
+  
   blackList = '';
 
   constructor(
@@ -72,6 +70,7 @@ export class StopListComponent implements OnInit {
       .getNewsByCoordinates(latitude, longitude, blackList)
       .subscribe((news) => {
         this.newsData = news;
+        console.log("News" , this.newsData)
       });
   }
 }
