@@ -1,4 +1,3 @@
-
 export type LibPisState =
   | 'Normal'
   | 'Fallback'
@@ -24,7 +23,7 @@ export interface InitParams {
   preview?: boolean;
 }
 
-export interface LuminatorWindow  {
+export interface LuminatorWindow {
   luminator: {
     pis: {
       client: any;
@@ -36,4 +35,46 @@ export interface LuminatorWindow  {
       }: InitParams): void;
     };
   };
+}
+
+export interface StopData {
+  cancelled: boolean;
+  designation: string;
+  estimatedTimeOfArrivalRelative: number;
+  isTimingPoint: boolean;
+  latitude: number;
+  longitude: number;
+  minutesFromPrevious: number;
+  name: string;
+  name_Multilanguage: { [key: string]: string };
+  offsetTime: number;
+  expectedArrivalTime: string;
+}
+
+export interface Coordinates {
+  latitude: number;
+  longitude: number;
+}
+
+export interface NewsData {
+  title: string;
+  description: string;
+  url: string;
+  type: "LOCAL" | "NATIONAL" | "INTERNATIONAL";
+  source: string;
+  imageUrl?: string;
+}
+
+export interface StopData {
+  cancelled: boolean;
+  designation: string;
+  estimatedTimeOfArrivalRelative: number;
+  isTimingPoint: boolean;
+  latitude: number;
+  longitude: number;
+  minutesFromPrevious: number;
+  name: string;
+  name_Multilanguage: { [key: string]: string };
+  offsetTime: number;
+  expectedArrivalTime: string;
 }
