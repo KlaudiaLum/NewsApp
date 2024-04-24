@@ -10,7 +10,7 @@ import { throttleTime } from 'rxjs/operators';
     <ng-container *ngFor="let news of newsData; let i = index">
       <div
         class="card-container"
-        [ngClass]="getContainerClass(news.type.toLowerCase())"
+        [ngClass]="getBackgroundColor(news.type.toLowerCase())"
         *ngIf="i === currentIndex"
       >
         <div class="news-wrapper">
@@ -74,9 +74,9 @@ export class StopListComponent implements OnInit {
         }
       });
 
-    setInterval(() => {
-      this.currentIndex = (this.currentIndex + 1) % this.newsData.length;
-    }, 20000);
+     setInterval(() => {
+     this.currentIndex = (this.currentIndex + 1) % this.newsData.length;
+     }, 20000);
   }
 
   handleNewsData(latitude: number, longitude: number, blackList: string) {
@@ -88,7 +88,7 @@ export class StopListComponent implements OnInit {
       });
   }
 
-  getContainerClass(type: string): string {
+  getBackgroundColor(type: string): string {
     switch (type) {
       case 'local':
         return 'local-bg';
