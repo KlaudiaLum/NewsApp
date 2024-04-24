@@ -7,12 +7,10 @@ import { SubtitleComponent } from './subtitle/subtitle.component';
 import { TitleComponent } from './titile/titile.component';
 import { QRCodeModule } from 'angularx-qrcode';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ButtonModule } from 'primeng/button';
 import { HttpClientModule } from '@angular/common/http';
 import { TypeComponent } from './type/type.component';
 import { StopListComponent } from './stop-list/stop-list.component';
 import { ImageComponent } from './image/image.component';
-import { CardModule } from 'primeng/card';
 
 @NgModule({
   declarations: [
@@ -27,10 +25,8 @@ import { CardModule } from 'primeng/card';
     AppRoutingModule,
     BrowserAnimationsModule,
     BrowserModule,
-    ButtonModule,
     HttpClientModule,
     QRCodeModule,
-    CardModule
   ],
   providers: [],
   bootstrap: [AppComponent]
