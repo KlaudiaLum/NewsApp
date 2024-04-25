@@ -4,15 +4,14 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environment/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LibpisService {
-
   state$: Observable<NormalizedState>;
 
-  constructor(){
+  constructor() {
     if (!window.luminator.pis) {
-      throw Error('Can\'t find LibPIS')
+      throw Error("Can't find LibPIS");
     }
 
     window.luminator.pis.init(environment.mqttConfig);

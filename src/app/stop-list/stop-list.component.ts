@@ -74,9 +74,9 @@ export class StopListComponent implements OnInit {
         }
       });
 
-     setInterval(() => {
-     this.currentIndex = (this.currentIndex + 1) % this.newsData.length;
-     }, 20000);
+    setInterval(() => {
+      this.currentIndex = (this.currentIndex + 1) % this.newsData.length;
+    }, 20000);
   }
 
   handleNewsData(latitude: number, longitude: number, blackList: string) {

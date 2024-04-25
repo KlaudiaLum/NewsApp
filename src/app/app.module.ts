@@ -19,7 +19,7 @@ import { ImageComponent } from './image/image.component';
     TitleComponent,
     TypeComponent,
     StopListComponent,
-    ImageComponent
+    ImageComponent,
   ],
   imports: [
     AppRoutingModule,
@@ -29,6 +29,6 @@ import { ImageComponent } from './image/image.component';
     QRCodeModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
