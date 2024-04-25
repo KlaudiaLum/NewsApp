@@ -1,0 +1,47 @@
+{
+  "layouts": [
+    {
+      "id": "34c07d4a-e542-4690-874f-40ac9a5ee51e",
+      "name": "News",
+      "description": "Show news",
+      "paths": ["WebApps/webapps.newsApp"],
+      "thumbnail": "WebApps/thumbnail.svg",
+      "projectType": "MOBILE",
+      "url": "/WebApps/webapps.newsApp/index.html",
+      "parameters": [
+        {
+          "name": "Read query params",
+          "type": "ENUM",
+          "options": [
+            {
+              "value": "true",
+              "label": "Yes"
+            },
+            {
+              "value": "false",
+              "label": "No"
+            }
+          ],
+          "label": "Read query params"
+        },
+        {
+          "name": "Rotation Time",
+          "type": "NUMBER",
+          "label": "Rotation Time",
+          "min": 1
+        },
+        {
+          "name": "BlackListSources",
+          "type": "STRING",
+          "label": "BlackListSources",
+          "placeholder": "String, comma separated"
+        },
+        {
+          "name": "LocalOnly",
+          "type": "BOOLEAN",
+          "label": "LocalOnly"
+        }
+      ]
+    }
+  ]
+}
