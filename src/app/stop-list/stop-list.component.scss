@@ -1,0 +1,36 @@
+.card-container {
+  padding: 1rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-auto-rows: minmax(100px, auto);
+  border-radius: 2rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+  &.local-bg {
+    background-color: rgb(244, 224, 213);
+  }
+
+  &.national-bg {
+    background-color: rgb(209, 245, 209);
+  }
+
+  &.international-bg {
+    background-color: rgb(205, 240, 244);
+  }
+}
+
+.news-wrapper {
+  position: relative;
+  display: grid;
+  place-items: center;
+
+  img {
+    width: 100%;
+    height: auto;
+  }
+}
+
+.qr-wrapper {
+  display: grid;
+  place-items: center;
+}
