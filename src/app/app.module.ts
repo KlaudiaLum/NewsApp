@@ -5,7 +5,6 @@ import { AppRoutingModule } from './app.routing.module';
 import { AppComponent } from './app.component';
 import { SubtitleComponent } from './subtitle/subtitle.component';
 import { TitleComponent } from './titile/titile.component';
-import { QrCodeComponent } from './qr-code/qr-code.component';
 import { QRCodeModule } from 'angularx-qrcode';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ButtonModule } from 'primeng/button';
@@ -18,12 +17,11 @@ import { CardModule } from 'primeng/card';
 @NgModule({
   declarations: [
     AppComponent,
-    QrCodeComponent,
     SubtitleComponent,
     TitleComponent,
     TypeComponent,
     StopListComponent,
-    ImageComponent
+    ImageComponent,
   ],
   imports: [
     AppRoutingModule,
@@ -32,9 +30,9 @@ import { CardModule } from 'primeng/card';
     ButtonModule,
     HttpClientModule,
     QRCodeModule,
-    CardModule
+    CardModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

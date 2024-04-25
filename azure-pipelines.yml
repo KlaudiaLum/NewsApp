@@ -32,7 +32,7 @@ jobs:
 
       - script: npm run build
         displayName: "Build"
-        
+
       - script: npm run format
         displayName: "Check Formatting with Prettier"
 

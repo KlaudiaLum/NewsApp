@@ -7,24 +7,30 @@ import { throttleTime } from 'rxjs/operators';
 @Component({
   selector: 'app-stop-list',
   template: `
-   <ng-container *ngFor="let news of newsData">
-  <p-card *ngIf="news.title || news.type || news.description || news.imageUrl">
-    <ng-template pTemplate="title">
-      <app-title *ngIf="news.title" [newsTitle]="news.title"></app-title>
-    </ng-template>
-    <ng-template pTemplate="subtitle">
-      <app-subtitle *ngIf="news.description" [newsDescription]="news.description"></app-subtitle>
-    </ng-template>
-    <ng-template pTemplate="content">
-      <app-image *ngIf="news.imageUrl" [newsImage]="news.imageUrl"></app-image>
-    </ng-template>
-    <ng-template pTemplate="footer">
-      <app-type *ngIf="news.type" [newsType]="news.type"></app-type>
-    </ng-template>
-  </p-card>
-</ng-container>
-
-
+    <ng-container *ngFor="let news of newsData">
+      <p-card
+        *ngIf="news.title || news.type || news.description || news.imageUrl"
+      >
+        <ng-template pTemplate="title">
+          <app-title *ngIf="news.title" [newsTitle]="news.title"></app-title>
+        </ng-template>
+        <ng-template pTemplate="subtitle">
+          <app-subtitle
+            *ngIf="news.description"
+            [newsDescription]="news.description"
+          ></app-subtitle>
+        </ng-template>
+        <ng-template pTemplate="content">
+          <app-image
+            *ngIf="news.imageUrl"
+            [newsImage]="news.imageUrl"
+          ></app-image>
+        </ng-template>
+        <ng-template pTemplate="footer">
+          <app-type *ngIf="news.type" [newsType]="news.type"></app-type>
+        </ng-template>
+      </p-card>
+    </ng-container>
   `,
   styleUrls: ['./stop-list.component.scss'],
 })

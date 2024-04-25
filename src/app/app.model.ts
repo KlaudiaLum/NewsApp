@@ -60,7 +60,7 @@ export interface NewsData {
   title: string;
   description: string;
   url: string;
-  type: "LOCAL" | "NATIONAL" | "INTERNATIONAL";
+  type: 'LOCAL' | 'NATIONAL' | 'INTERNATIONAL';
   source: string;
   imageUrl?: string;
 }
