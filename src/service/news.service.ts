@@ -25,6 +25,5 @@ export class NewsService {
     return this.http.get<NewsData[]>(
       `${this.apiUrl}?lon=${longitude}&lat=${latitude}&blacklistSources=${blacklistSources}`,
     );
-
   }
 }
