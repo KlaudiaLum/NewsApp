@@ -12,17 +12,23 @@
         {
           "name": "rotationTime",
           "label": "Rotation Time",
-          "type": "Number"
+          "type": "Number",
+          "value": 0,
+          "checked": false
         },
         {
           "name": "blackListSources",
           "label": "BlackList Sources",
-          "type": "String"
+          "type": "String",
+          "value": "",
+          "checked": false
         },
         {
           "name": "localOnly",
           "label": "Local Only",
-          "type": "Boolean"
+          "type": "Boolean",
+          "value": false,
+          "checked": false
         }
       ]
     }
