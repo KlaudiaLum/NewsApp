@@ -10,36 +10,19 @@
       "url": "/WebApps/webapps.newsApp/index.html",
       "parameters": [
         {
-          "name": "Read query params",
-          "type": "ENUM",
-          "options": [
-            {
-              "value": "true",
-              "label": "Yes"
-            },
-            {
-              "value": "false",
-              "label": "No"
-            }
-          ],
-          "label": "Read query params"
-        },
-        {
-          "name": "Rotation Time",
-          "type": "NUMBER",
+          "name": "rotationTime",
           "label": "Rotation Time",
-          "min": 1
+          "type": "Number"
         },
         {
-          "name": "BlackListSources",
-          "type": "STRING",
-          "label": "BlackListSources",
-          "placeholder": "String, comma separated"
+          "name": "blackListSources",
+          "label": "BlackList Sources",
+          "type": "String"
         },
         {
-          "name": "LocalOnly",
-          "type": "BOOLEAN",
-          "label": "LocalOnly"
+          "name": "localOnly",
+          "label": "Local Only",
+          "type": "Boolean"
         }
       ]
     }
