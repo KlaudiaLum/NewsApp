@@ -13,7 +13,7 @@
       "parameters": [
         {
           "name": "newsLookupType ",
-          "type": "CHECKBOX_GROUP",
+          "type": "ENUM",
           "options": [
             {
               "name": "rotationTime",
