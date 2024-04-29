@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../environment/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { NewsData } from 'src/app/app.model';
 
 @Injectable({
@@ -20,19 +20,18 @@ export class NewsService {
   getNewsByCoordinates(
     latitude: number,
     longitude: number,
+    localOnly: boolean,
     blacklistSources: string,
   ): Observable<NewsData[]> {
-    return this.http.get<NewsData[]>(
-      `${this.apiUrl}?lon=${longitude}&lat=${latitude}&blacklistSources=${blacklistSources}`,
-    );
-  }
+    let params = new HttpParams();
 
-  getNewsCoordinats(
-    latitude: number,
-    longitude: number,
-    blacklistSources: any,
-  ): Observable<any> {
-    const url = `${this.apiUrl}?lon=${longitude}&lat=${latitude}&blacklistSources=${blacklistSources}`;
-    return this.http.get(url);
+    if (localOnly) {
+      params = params.set('localOnly', 'true');
+    }
+    if (blacklistSources) {
+      params = params.set('blacklistSources', blacklistSources);
+    }
+    const url = `${this.apiUrl}?lon=${longitude}&lat=${latitude}`;
+    return this.http.get<NewsData[]>(url, { params });
   }
 }
