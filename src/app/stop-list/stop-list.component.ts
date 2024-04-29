@@ -43,7 +43,7 @@ export class StopListComponent implements OnInit {
   stops: StopData[] = [];
   newsData: NewsData[] = [];
   region: string | undefined;
-
+  localOnly = false;
   blacklistSources = '';
   currentIndex = 0;
 
@@ -57,6 +57,8 @@ export class StopListComponent implements OnInit {
     this.route.queryParams.subscribe((params) => {
       this.blacklistSources = params['blacklistSources'] || ',';
       console.log('blacklistSources:', this.blacklistSources);
+      this.localOnly = params['localOnly'] === 'true';
+      console.log('localOnly:', this.localOnly);
     });
 
     this.libPISService
@@ -79,7 +81,12 @@ export class StopListComponent implements OnInit {
           latitude = nextStop.latitude;
           longitude = nextStop.longitude;
 
-          this.handleNewsData(latitude, longitude, this.blacklistSources);
+          this.handleNewsData(
+            latitude,
+            longitude,
+            this.blacklistSources,
+            this.localOnly,
+          );
         }
       });
 
@@ -92,14 +99,18 @@ export class StopListComponent implements OnInit {
     latitude: number,
     longitude: number,
     blacklistSources: string,
+    localOnly: boolean,
   ) {
     let params = new HttpParams();
     if (this.blacklistSources) {
       params = params.set('blckListSources', this.blacklistSources);
     }
+    if (localOnly) {
+      params = params.set('localOnly', 'true');
+    }
 
     this.newsService
-      .getNewsByCoordinates(latitude, longitude, blacklistSources)
+      .getNewsByCoordinates(latitude, longitude, localOnly, blacklistSources)
       .subscribe((news) => {
         this.newsData = news;
         console.log('News', this.newsData);

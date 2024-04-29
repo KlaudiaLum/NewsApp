@@ -20,11 +20,13 @@ export class NewsService {
   getNewsByCoordinates(
     latitude: number,
     longitude: number,
+    localOnly: boolean,
     blacklistSources: string,
   ): Observable<NewsData[]> {
     let params = new HttpParams()
       .set('lon', longitude.toString())
-      .set('lat', latitude.toString());
+      .set('lat', latitude.toString())
+      .set('localOnly', localOnly ? 'true' : 'false');
 
     if (blacklistSources) {
       params = params.set('blacklistSources', blacklistSources);
