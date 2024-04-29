@@ -3,6 +3,8 @@ import { NewsData, StopData } from '../app.model';
 import { NewsService } from 'src/service/news.service';
 import { LibpisService } from 'src/service/libpis.service';
 import { throttleTime } from 'rxjs/operators';
+import { ActivatedRoute } from '@angular/router';
+import { HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'app-stop-list',
@@ -41,15 +43,21 @@ export class StopListComponent implements OnInit {
   newsData: NewsData[] = [];
   region: string | undefined;
 
-  blackList = '';
+  blacklistSources = '';
   currentIndex = 0;
 
   constructor(
     private newsService: NewsService,
     private libPISService: LibpisService,
+    private route: ActivatedRoute,
   ) {}
 
   ngOnInit(): void {
+    this.route.queryParams.subscribe((params) => {
+      this.blacklistSources = params['blacklistSources'] || ',';
+      console.log('blacklistSources:', this.blacklistSources);
+    });
+
     this.libPISService
       .getState()
       .pipe(throttleTime(10000))
@@ -70,7 +78,7 @@ export class StopListComponent implements OnInit {
           latitude = nextStop.latitude;
           longitude = nextStop.longitude;
 
-          this.handleNewsData(latitude, longitude, this.blackList);
+          this.handleNewsData(latitude, longitude, this.blacklistSources);
         }
       });
 
@@ -79,9 +87,18 @@ export class StopListComponent implements OnInit {
     }, 20000);
   }
 
-  handleNewsData(latitude: number, longitude: number, blackList: string) {
+  handleNewsData(
+    latitude: number,
+    longitude: number,
+    blacklistSources: string,
+  ) {
+    let params = new HttpParams();
+    if (this.blacklistSources) {
+      params = params.set('blckListSources', this.blacklistSources);
+    }
+
     this.newsService
-      .getNewsByCoordinates(latitude, longitude, blackList)
+      .getNewsByCoordinates(latitude, longitude, blacklistSources)
       .subscribe((news) => {
         this.newsData = news;
         console.log('News', this.newsData);
