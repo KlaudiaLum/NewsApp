@@ -21,12 +21,13 @@ import { HttpParams } from '@angular/common/http';
             <img alt="Card" [src]="news.imageUrl" class="card-image" />
             <div>
               <h3>{{ news.title }}</h3>
+
               <p>{{ news.description }}</p>
             </div>
           </div>
         </div>
-
         <div class="qr-wrapper">
+          <img alt="logo" [src]="news.logoUrl" class="logo" />
           <qrcode
             [qrdata]="news.url"
             [width]="256"
