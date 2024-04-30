@@ -63,6 +63,7 @@ export interface NewsData {
   type: 'LOCAL' | 'NATIONAL' | 'INTERNATIONAL';
   source: string;
   imageUrl?: string;
+  logoUrl: string;
 }
 
 export interface StopData {
