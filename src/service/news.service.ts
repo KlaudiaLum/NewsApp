@@ -26,13 +26,4 @@ export class NewsService {
       `${this.apiUrl}?lon=${longitude}&lat=${latitude}&blacklistSources=${blacklistSources}`,
     );
   }
-
-  getNewsCoordinats(
-    latitude: number,
-    longitude: number,
-    blacklistSources: any,
-  ): Observable<any> {
-    const url = `${this.apiUrl}?lon=${longitude}&lat=${latitude}&blacklistSources=${blacklistSources}`;
-    return this.http.get(url);
-  }
 }
