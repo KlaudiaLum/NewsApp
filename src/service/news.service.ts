@@ -28,7 +28,7 @@ export class NewsService {
       .set('lat', latitude.toString())
       .set('localOnly', localOnly ? 'true' : 'false');
 
-    if (blacklistSources) {
+    if (blacklistSources && blacklistSources.trim() !== '') {
       params = params.set('blacklistSources', blacklistSources);
     }
     const url = `${this.apiUrl}`;
