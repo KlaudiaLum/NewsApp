@@ -3,6 +3,8 @@ import { NewsData, StopData } from '../app.model';
 import { NewsService } from 'src/service/news.service';
 import { LibpisService } from 'src/service/libpis.service';
 import { throttleTime } from 'rxjs/operators';
+import { ActivatedRoute } from '@angular/router';
+import { HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'app-stop-list',
@@ -41,16 +43,24 @@ export class StopListComponent implements OnInit {
   stops: StopData[] = [];
   newsData: NewsData[] = [];
   region: string | undefined;
-
-  blackList = '';
+  localOnly = false;
+  blacklistSources = '';
   currentIndex = 0;
 
   constructor(
     private newsService: NewsService,
     private libPISService: LibpisService,
+    private route: ActivatedRoute,
   ) {}
 
   ngOnInit(): void {
+    this.route.queryParams.subscribe((params) => {
+      this.blacklistSources = params['blacklistSources'] || ',';
+      console.log('blacklistSources:', this.blacklistSources);
+      this.localOnly = params['localOnly'] === 'true';
+      console.log('localOnly:', this.localOnly);
+    });
+
     this.libPISService
       .getState()
       .pipe(throttleTime(10000))
@@ -71,7 +81,12 @@ export class StopListComponent implements OnInit {
           latitude = nextStop.latitude;
           longitude = nextStop.longitude;
 
-          this.handleNewsData(latitude, longitude, this.blackList);
+          this.handleNewsData(
+            latitude,
+            longitude,
+            this.blacklistSources,
+            this.localOnly,
+          );
         }
       });
 
@@ -80,9 +95,22 @@ export class StopListComponent implements OnInit {
     }, 20000);
   }
 
-  handleNewsData(latitude: number, longitude: number, blackList: string) {
+  handleNewsData(
+    latitude: number,
+    longitude: number,
+    blacklistSources: string,
+    localOnly: boolean,
+  ) {
+    let params = new HttpParams();
+    if (this.blacklistSources) {
+      params = params.set('blackListSources', this.blacklistSources);
+    }
+    if (localOnly) {
+      params = params.set('localOnly', 'true');
+    }
+
     this.newsService
-      .getNewsByCoordinates(latitude, longitude, blackList)
+      .getNewsByCoordinates(latitude, longitude, localOnly, blacklistSources)
       .subscribe((news) => {
         this.newsData = news;
         console.log('News', this.newsData);
