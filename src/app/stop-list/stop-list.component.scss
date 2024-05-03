@@ -6,29 +6,21 @@
   border-radius: 2rem;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   width: calc(100vw - 4rem);
-  height: calc(100vh - 2rem);
+  height: calc(100vh - 4rem);
   justify-content: center;
   align-items: center;
-  
 }
 
 .title-wrapper {
+  margin-top: 1rem;
   .title-first {
-    font-size: 2em;
+    font-size: 1.5rem;
     font-style: bold;
   }
 
   .title-second {
     font-style: italic;
   }
-
-}
-
-
-.second-part {
-  font-weight: bold !important;
-  color: red !important;
-  font-style: italic !important;
 }
 
 .card-container.local-bg {
@@ -45,20 +37,19 @@
 
 .news-wrapper {
   grid-row: span 3;
-  grid-column-start: 2; 
-  grid-column-end: span 3; 
-
+  grid-column-start: 2;
+  grid-column-end: span 3;
 }
 
 .qr-wrapper {
   grid-row: span 3;
-  grid-column-start: 6; 
-  grid-column-end: span 2; 
+  grid-column-start: 6;
+  grid-column-end: span 2;
 }
 
 .card-image {
-  max-width: 100%; 
-  max-height: auto; 
+  max-width: 100%;
+  max-height: auto;
 }
 
 .image-container {
@@ -72,5 +63,11 @@
   top: -1rem;
   left: -1rem;
   border-radius: 50%;
-  border: 0.5em solid black;
+  border: 0.3rem solid black;
+  box-shadow: 0 4px 8px rgba(0.1, 0.1, 0.1, 0.1);
 }
+
+// .description{
+//   grid-row-start: 3;
+//   grid-row-end: span 5;
+// }
