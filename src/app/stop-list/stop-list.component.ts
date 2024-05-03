@@ -15,19 +15,22 @@ import { HttpParams } from '@angular/common/http';
         [ngClass]="getBackgroundColor(news.type.toLowerCase())"
         *ngIf="i === currentIndex"
       >
+        <!-- <img alt="logo" [src]="news.logoUrl" class="logo" /> -->
         <div class="news-wrapper">
-          <p>{{ news.type }}</p>
           <div class="image-container">
             <img alt="Card" [src]="news.imageUrl" class="card-image" />
-            <div>
-              <h3>{{ news.title }}</h3>
-
-              <p>{{ news.description }}</p>
-            </div>
+            <img alt="logo" [src]="news.logoUrl" class="logo-img" />
           </div>
+
+          <div class="title-wrapper">
+            <span class="title-first">{{ firstPart(news.title) }}</span>
+            <span class="title-divider">{{ titleDivider() }}</span>
+            <span class="title-second">{{ secondPart(news.title) }}</span>
+          </div>
+
+          <p class="description">{{ news.description }}</p>
         </div>
         <div class="qr-wrapper">
-          <img alt="logo" [src]="news.logoUrl" class="logo" />
           <qrcode
             [qrdata]="news.url"
             [width]="256"
@@ -53,6 +56,24 @@ export class StopListComponent implements OnInit {
     private route: ActivatedRoute,
   ) {}
 
+  firstPart(title: string): string {
+    if (title.includes('-')) {
+      const parts = title.split('-');
+      return parts[0];
+    }
+
+    return title;
+  }
+
+  secondPart(title: string) {
+    let firstPart = this.firstPart(title);
+    return title.substring(firstPart.length + 1);
+  }
+
+  titleDivider(): string {
+    return '-';
+  }
+
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
       this.blacklistSources = params['blacklistSources'] || ',';
@@ -61,6 +82,7 @@ export class StopListComponent implements OnInit {
       console.log('localOnly:', this.localOnly);
     });
 
+    let i = 1
     this.libPISService
       .getState()
       .pipe(throttleTime(10000))
@@ -81,12 +103,15 @@ export class StopListComponent implements OnInit {
           latitude = nextStop.latitude;
           longitude = nextStop.longitude;
 
-          this.handleNewsData(
+            if(i == 1){
+            this.handleNewsData(
             latitude,
             longitude,
             this.blacklistSources,
             this.localOnly,
           );
+            }
+         
         }
       });
 
