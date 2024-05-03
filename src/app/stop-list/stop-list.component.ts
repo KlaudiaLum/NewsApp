@@ -15,10 +15,20 @@ import { HttpParams } from '@angular/common/http';
         [ngClass]="getBackgroundColor(news.type.toLowerCase())"
         *ngIf="i === currentIndex"
       >
-        <!-- <img alt="logo" [src]="news.logoUrl" class="logo" /> -->
         <div class="news-wrapper">
           <div class="image-container">
-            <img alt="Card" [src]="news.imageUrl" class="card-image" />
+            <div class="image-container">
+              <img
+                alt="Card"
+                [src]="news.imageUrl ? news.imageUrl : news.logoUrl"
+                [ngStyle]="{
+                  'width.px': news.imageUrl ? 'auto' : '100',
+                  'height.px': news.imageUrl ? 'auto' : '100'
+                }"
+                class="card-image"
+              />
+            </div>
+
             <img alt="logo" [src]="news.logoUrl" class="logo-img" />
           </div>
 
@@ -82,7 +92,7 @@ export class StopListComponent implements OnInit {
       console.log('localOnly:', this.localOnly);
     });
 
-    let i = 1
+    let i = 1;
     this.libPISService
       .getState()
       .pipe(throttleTime(10000))
@@ -103,21 +113,20 @@ export class StopListComponent implements OnInit {
           latitude = nextStop.latitude;
           longitude = nextStop.longitude;
 
-            if(i == 1){
+          if (i == 1) {
             this.handleNewsData(
-            latitude,
-            longitude,
-            this.blacklistSources,
-            this.localOnly,
-          );
-            }
-         
+              latitude,
+              longitude,
+              this.blacklistSources,
+              this.localOnly,
+            );
+          }
         }
       });
 
     setInterval(() => {
       this.currentIndex = (this.currentIndex + 1) % this.newsData.length;
-    }, 20000);
+    }, 200000);
   }
 
   handleNewsData(
