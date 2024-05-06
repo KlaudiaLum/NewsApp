@@ -77,6 +77,7 @@ export class StopListComponent implements OnInit {
 
   secondPart(title: string) {
     const firstPart = this.firstPart(title);
+
     return title.substring(firstPart.length + 1);
   }
 
