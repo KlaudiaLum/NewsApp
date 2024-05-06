@@ -11,13 +11,16 @@
     <app-root></app-root>
   </body>
   <script>
-    const urlString = window.location.href
-        const url = new URL(urlString);
-    
-              window.parent.postMessage({
-                app: 'NewsApp',
-                instanceId: url.searchParams.get("instanceId"),
-                message: 'initialized'
-              }, '*');
-    </script>
+    const urlString = window.location.href;
+    const url = new URL(urlString);
+
+    window.parent.postMessage(
+      {
+        app: "NewsApp",
+        instanceId: url.searchParams.get("instanceId"),
+        message: "initialized",
+      },
+      "*",
+    );
+  </script>
 </html>
