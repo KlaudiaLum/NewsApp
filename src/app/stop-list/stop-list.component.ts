@@ -134,7 +134,7 @@ export class StopListComponent implements OnInit {
   ) {
     let params = new HttpParams();
     if (this.blacklistSources) {
-      params = params.set('blckListSources', this.blacklistSources);
+      params = params.set('blackListSources', this.blacklistSources);
     }
     if (localOnly) {
       params = params.set('localOnly', 'true');
