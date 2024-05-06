@@ -92,7 +92,6 @@ export class StopListComponent implements OnInit {
       console.log('localOnly:', this.localOnly);
     });
 
-    let i = 1;
     this.libPISService
       .getState()
       .pipe(throttleTime(10000))
@@ -113,20 +112,18 @@ export class StopListComponent implements OnInit {
           latitude = nextStop.latitude;
           longitude = nextStop.longitude;
 
-          if (i == 1) {
-            this.handleNewsData(
-              latitude,
-              longitude,
-              this.blacklistSources,
-              this.localOnly,
-            );
-          }
+          this.handleNewsData(
+            latitude,
+            longitude,
+            this.blacklistSources,
+            this.localOnly,
+          );
         }
       });
 
     setInterval(() => {
       this.currentIndex = (this.currentIndex + 1) % this.newsData.length;
-    }, 200000);
+    }, 20000);
   }
 
   handleNewsData(
