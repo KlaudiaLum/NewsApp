@@ -10,7 +10,7 @@
       "url": "/WebApps/webapps.newsApp/index.html",
       "parameters": [
         {
-          "name": "newsLookupType ",
+          "name": "newsLookupType",
           "type": "ENUM",
           "options": [
             {
