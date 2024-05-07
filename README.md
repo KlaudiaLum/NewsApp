@@ -1,27 +1,30 @@
 # NewsApp
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.13.
+![Local](./src/assets/local.png) 
 
-## Development server
+The News App is a dynamic application designed to provide display a variety of news content on the TFT screens inside transit vehicles. This system aims to provide passengers with current news, tailored content based on location, and significant global headlines.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Features
 
-## Code scaffolding
+- **Fetching News Data**: Automatically fetches news articles and headlines from reputable sources.
+- **Diverse News Coverage**:Provides a broad spectrum of news content, including local, national, and international news, ensuring passengers have access to comprehensive information.
+- **Location-based News Filtering**:Adjusts the news feed according to the vehicle's current location or route, ensuring passengers receive timely updates on relevant local news.
+-**QR Code**: Users have the option to scan QR codes, which directly link to the respective article's page.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## How to Run
 
-## Build
+1. Clone the repository to your local environment.
+2. Install dependencies using `npm install`.
+3. Run the application using `ng serve`.
+4. Navigate to `http://localhost:4200/` in your web browser.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## How to Use
 
-## Running unit tests
+- In the main view of the application, users will see new first will be print local then nationa nad las international
+- Each news item includes an image, title, subtitle, QR code, and source name.
+- News rotates every 20 seconds.
+- Each type of news has its own background:
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+| Local                            | National                               | International                                    |
+| -------------------------------- | -------------------------------------- | ------------------------------------------------ |
+| ![Local](./src/assets/local.png) | ![National](./src/assets/national.png) | ![International](./src/assets/international.png) |
