@@ -1,6 +1,6 @@
 # NewsApp
 
-![Local](./src/assets/local.png) 
+![Local](./src/assets/local.png)
 
 The News App is a dynamic application designed to provide display a variety of news content on the TFT screens inside transit vehicles. This system aims to provide passengers with current news, tailored content based on location, and significant global headlines.
 
@@ -8,8 +8,7 @@ The News App is a dynamic application designed to provide display a variety of n
 
 - **Fetching News Data**: Automatically fetches news articles and headlines from reputable sources.
 - **Diverse News Coverage**:Provides a broad spectrum of news content, including local, national, and international news, ensuring passengers have access to comprehensive information.
-- **Location-based News Filtering**:Adjusts the news feed according to the vehicle's current location or route, ensuring passengers receive timely updates on relevant local news.
--**QR Code**: Users have the option to scan QR codes, which directly link to the respective article's page.
+- **Location-based News Filtering**:Adjusts the news feed according to the vehicle's current location or route, ensuring passengers receive timely updates on relevant local news. -**QR Code**: Users have the option to scan QR codes, which directly link to the respective article's page.
 
 ## How to Run
 
